@@ -1,5 +1,5 @@
 ---
-title: "MoonBit Standard Library (moonbitlang/core)"
+title: "MoonBit Standard Library and External Packages"
 ---
 
 # MoonBit Standard Library
@@ -271,4 +271,69 @@ moon doc "@json"
 
 # Find all parse functions
 moon doc "*parse*"
+```
+
+---
+
+# External Packages
+
+Unlike `moonbitlang/core`, these packages require explicit installation.
+
+## moonbitlang/x - Extended Utilities
+
+Experimental and extended utilities not yet in core.
+
+### Installation
+
+```bash
+moon add moonbitlang/x
+```
+
+### Common Packages
+
+```moonbit
+// @x/fs - File system operations (native/node backend)
+let content = @x/fs.read_to_string("file.txt")
+
+// @x/sys - System operations
+let args = @x/sys.get_args()
+let env = @x/sys.get_env()
+```
+
+### Exploring
+
+```bash
+moon doc "@x/fs"
+moon doc "@x/sys"
+```
+
+## moonbitlang/async - Asynchronous Programming
+
+Async/await support for MoonBit.
+
+### Installation
+
+```bash
+moon add moonbitlang/async
+```
+
+### Basic Usage
+
+```moonbit
+// Define async function
+async fn fetch_data(url : String) -> String raise {
+  // async operations
+}
+
+// Run async code
+@async.run(async fn() {
+  let data = fetch_data("https://example.com")!
+  println(data)
+})
+```
+
+### Exploring
+
+```bash
+moon doc "@async"
 ```
