@@ -119,3 +119,72 @@ The tool processes queries in this order:
 4. Return top 3 best matches with location information
 
 **Best Practice**: Start with `-tags` to reduce noise, then use `@pkg` prefixes in `-query` to scope by package for precise navigation.
+
+## Additional IDE Commands
+
+### `moon ide peek-def`
+
+インラインで定義を表示。grep より正確（セマンティック検索）。
+
+```bash
+# トップレベルシンボルの定義
+$ moon ide peek-def String::rev
+Found 1 symbols matching 'String::rev':
+`pub fn String::rev` in package moonbitlang/core/builtin at .../string_methods.mbt:1039-1044
+
+# 位置を指定してローカルシンボルの定義
+$ moon ide peek-def Parser -loc src/parse.mbt:46:4
+Definition found at file src/parse.mbt
+  | ///|
+2 | priv struct Parser {
+  |             ^^^^^^
+  |   bytes : Bytes
+  |   mut pos : Int
+  | }
+```
+
+### `moon ide outline`
+
+パッケージまたはファイルのトップレベルシンボル一覧。
+
+```bash
+# ディレクトリ（パッケージ）のアウトライン
+$ moon ide outline .
+spec.mbt:
+ L003 | pub(all) enum CStandard {
+       ...
+ L013 | pub(all) struct Position {
+       ...
+
+# 単一ファイルのアウトライン
+$ moon ide outline parser.mbt
+```
+
+### `moon ide find-references`
+
+シンボルの全参照箇所を検索。
+
+```bash
+$ moon ide find-references TranslationUnit
+```
+
+## `moon doc` for API Discovery
+
+**CRITICAL**: `moon doc '<query>'` は API 発見の主要ツール。grep より高速で正確。
+
+```bash
+# 空クエリ: 利用可能なパッケージ一覧
+moon doc ''
+
+# 型のメソッド一覧
+moon doc "String"
+
+# パッケージ内のシンボル一覧
+moon doc "@buffer"
+
+# 特定関数の詳細
+moon doc "@buffer.new"
+
+# グロブパターン
+moon doc "String::*rev*"
+```

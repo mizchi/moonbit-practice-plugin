@@ -14,6 +14,18 @@ AI が MoonBit コードを生成する際のベストプラクティス。
 - moon.pkg.json moon.mod.json の設定を書き換える前に reference/configuration.md を確認する
 - Moonbit に関する CLAUDE.md を更新するときは `reference/agents.md` を確認すること
 
+## Common Pitfalls（よくあるミス）
+
+- **変数・関数名に大文字を使わない** - コンパイルエラー
+- **`mut` はフィールド変更ではなく再代入時のみ** - Array の push には不要
+- **`return` は不要** - 最後の式が戻り値
+- **メソッドには `Type::` プレフィックス必須**
+- **`++` `--` は非対応** - `i = i + 1` または `i += 1`
+- **エラー伝播に `try` 不要** - 自動伝播（Swift と異なる）
+- **`await` キーワードなし** - async 関数は `async fn` で宣言するだけ
+- **C-style for より range for を優先** - `for i in 0..<n {...}`
+- **レガシー構文**: `function_name!(...)` や `function_name(...)?` は非推奨
+
 ## AI がよく間違える文法
 
 ### 型引数の位置
@@ -144,13 +156,74 @@ moon doc Map          # Map のメソッド一覧
 |---------|---------|------|
 | テスト | `moon test` | https://docs.moonbitlang.com/en/stable/language/tests |
 | スナップショット更新 | `moon test -u` | 同上 |
-| CI | `moon test -u` | |
+| フィルタ付きテスト | `moon test --filter 'glob'` | 特定テストのみ実行 |
 | ベンチマーク | `moon bench` | https://docs.moonbitlang.com/en/stable/language/benchmarks |
 | Doc Test | `moon check` / `moon test` | https://docs.moonbitlang.com/en/stable/language/docs |
 | フォーマット | `moon fmt` | - |
 | 型定義生成 | `moon info` | - |
 | ドキュメント参照 | `moon doc <Type>` | - |
 
+## moon ide ツール
+
+grep より正確なコードナビゲーション。詳細は `reference/ide.md` 参照。
+
+```bash
+# シンボル定義を表示
+moon ide peek-def Parser::read_u32_leb128
+
+# パッケージのアウトライン
+moon ide outline .
+
+# 参照箇所を検索
+moon ide find-references TranslationUnit
+
+# 型定義にジャンプ（位置指定）
+moon ide peek-def Parser -loc src/parse.mbt:46:4
+```
+
+## Functional for loop
+
+可能な限り functional for loop を使う。読みやすく、推論しやすい。
+
+```moonbit
+// 状態を持つ functional for loop
+for i = 0, sum = 0; i <= 10; {
+  continue i + 1, sum + i  // 状態の更新
+} else {
+  sum  // ループ終了時の値
+}
+
+// range for（推奨）
+for i in 0..<n { ... }
+for i, v in array { ... }  // index と value
+```
+
+## Error Handling
+
+MoonBit は checked errors を使用。詳細は `reference/ffi.md` 参照。
+
+```moonbit
+///| エラー型の宣言
+suberror ParseError {
+  InvalidEof
+  InvalidChar(Char)
+}
+
+///| raise で宣言、自動伝播
+fn parse(s: String) -> Int raise ParseError {
+  if s.is_empty() { raise ParseError::InvalidEof }
+  ...
+}
+
+///| Result に変換
+let result : Result[Int, ParseError] = try? parse(s)
+
+///| try-catch で処理
+parse(s) catch {
+  ParseError::InvalidEof => -1
+  _ => 0
+}
+```
 
 ## Assets
 
