@@ -10,9 +10,36 @@ AI が MoonBit コードを生成する際のベストプラクティス。
 
 ## やってほしいこと
 
-- grep の前に `moon ide goto-definition -tags 'pub fn' -query 'maximum'` を積極的に使って型を追跡する
-- moon.pkg.json moon.mod.json の設定を書き換える前に reference/configuration.md を確認する
-- Moonbit に関する CLAUDE.md を更新するときは `reference/agents.md` を確認すること
+### コードナビゲーション: Read/Grep より moon ide を優先
+
+MoonBit プロジェクトでは **Read ツールや grep より `moon ide` コマンドを優先** すること。
+
+```bash
+# ❌ 避ける: ファイルを直接読む
+Read src/parser.mbt
+
+# ✅ 推奨: シンボルから定義を探す
+moon ide peek-def Parser::parse
+moon ide goto-definition -tags 'pub fn' -query 'parse'
+
+# ❌ 避ける: grep で検索
+grep -r "fn parse" .
+
+# ✅ 推奨: セマンティック検索
+moon ide find-references parse
+moon ide outline src/parser.mbt
+```
+
+**理由:**
+- `moon ide` はセマンティック検索（定義とコールサイトを区別）
+- grep はコメントや文字列も拾う
+- `moon doc` で API を素早く把握できる
+
+### その他のルール
+
+- `moon doc '<Type>'` で API を調べてから実装する
+- moon.pkg.json / moon.mod.json を編集する前に reference/configuration.md を確認
+- CLAUDE.md を更新するときは reference/agents.md を確認
 
 ## Common Pitfalls（よくあるミス）
 
