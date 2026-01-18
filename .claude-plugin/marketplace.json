@@ -1,0 +1,21 @@
+{
+  "name": "moonbit-plugins",
+  "description": "MoonBit development plugins for Claude Code",
+  "owner": {
+    "name": "mz"
+  },
+  "plugins": [
+    {
+      "name": "moonbit-practice",
+      "source": "./plugins/moonbit-practice",
+      "description": "MoonBit code generation best practices. Use when writing MoonBit code to avoid common AI mistakes with syntax, tests, and benchmarks.",
+      "version": "1.0.0",
+      "author": {
+        "name": "mz"
+      },
+      "keywords": ["moonbit", "best-practices", "coding-guide"],
+      "category": "languages",
+      "license": "MIT"
+    }
+  ]
+}

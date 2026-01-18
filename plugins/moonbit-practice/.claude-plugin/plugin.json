@@ -1,0 +1,11 @@
+{
+  "name": "moonbit-practice",
+  "description": "MoonBit code generation best practices. Use when writing MoonBit code to avoid common AI mistakes with syntax, tests, and benchmarks.",
+  "version": "1.0.0",
+  "author": {
+    "name": "mz"
+  },
+  "license": "MIT",
+  "keywords": ["moonbit", "best-practices", "coding-guide"],
+  "commands": ["./commands"]
+}

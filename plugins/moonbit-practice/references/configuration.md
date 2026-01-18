@@ -1,0 +1,175 @@
+---
+title: "MoonBit Configuration Reference"
+---
+
+# MoonBit 設定リファレンス
+
+## ファイル構造
+
+```
+my-project/
+├── moon.mod.json    # モジュール設定（プロジェクト全体）
+└── src/
+    ├── moon.pkg.json  # パッケージ設定
+    └── main.mbt
+```
+
+## moon.mod.json（モジュール設定）
+
+### 必須フィールド
+
+```json
+{
+  "name": "username/project-name",
+  "version": "0.1.0"
+}
+```
+
+### 依存関係
+
+```json
+{
+  "deps": {
+    "moonbitlang/x": "0.4.6",
+    "username/other": { "path": "../other" }
+  }
+}
+```
+
+### メタ情報
+
+```json
+{
+  "license": "MIT",
+  "repository": "https://github.com/...",
+  "description": "...",
+  "keywords": ["example", "test"]
+}
+```
+
+### ソースディレクトリ
+
+```json
+{
+  "source": "src"
+}
+```
+
+### ターゲット指定
+
+```json
+{
+  "preferred-target": "js"
+}
+```
+
+### 警告設定
+
+```json
+{
+  "warn-list": "-2-4",
+  "alert-list": "-alert_1"
+}
+```
+
+## moon.pkg.json（パッケージ設定）
+
+### メインパッケージ
+
+```json
+{
+  "is-main": true
+}
+```
+
+### 依存関係
+
+```json
+{
+  "import": [
+    "moonbitlang/quickcheck",
+    { "path": "moonbitlang/x/encoding", "alias": "lib" }
+  ],
+  "test-import": [...],
+  "wbtest-import": [...]
+}
+```
+
+### 条件付きコンパイル
+
+```json
+{
+  "targets": {
+    "only_js.mbt": ["js"],
+    "only_wasm.mbt": ["wasm"],
+    "not_js.mbt": ["not", "js"],
+    "debug_only.mbt": ["debug"],
+    "js_release.mbt": ["and", ["js"], ["release"]]
+  }
+}
+```
+
+条件: `wasm`, `wasm-gc`, `js`, `debug`, `release`
+演算子: `and`, `or`, `not`
+
+### リンクオプション
+
+#### JS バックエンド
+
+```json
+{
+  "link": {
+    "js": {
+      "exports": ["hello", "foo:bar"],
+      "format": "esm"
+    }
+  }
+}
+```
+
+format: `esm`（デフォルト）, `cjs`, `iife`
+
+#### Wasm バックエンド
+
+```json
+{
+  "link": {
+    "wasm-gc": {
+      "exports": ["hello"],
+      "use-js-builtin-string": true
+    }
+  }
+}
+```
+
+### Pre-build（ビルド前処理）
+
+```json
+{
+  "pre-build": [
+    {
+      "input": "a.txt",
+      "output": "a.mbt",
+      "command": ":embed -i $input -o $output"
+    }
+  ]
+}
+```
+
+`:embed` でファイルを MoonBit ソースに変換（`--text` または `--binary`）
+
+## 警告番号一覧
+
+よく使うもの:
+- `1` Unused function
+- `2` Unused variable
+- `11` Partial pattern matching
+- `12` Unreachable code
+- `27` Deprecated syntax
+
+確認: `moonc build-package -warn-help`
+
+## 参照
+
+- Module: https://docs.moonbitlang.com/en/stable/toolchain/moon/module
+- Package: https://docs.moonbitlang.com/en/stable/toolchain/moon/package
