@@ -24,6 +24,48 @@ NEW_MOON_PKG=1 moon fmt
 
 これにより `moon.pkg.json` が `moon.pkg` に変換される。
 
+## moon.pkg（新形式）
+
+JSON に比べてコメント対応、末尾カンマ許可、より簡潔な構文が特徴。
+
+### インポート
+
+```moonbit
+// 基本インポート
+import {
+  "moonbitlang/async/io",
+  "path/to/pkg" as @alias,
+}
+
+// テスト用インポート
+import "test" {
+  "path/to/pkg5",
+}
+
+// ホワイトボックステスト用インポート
+import "wbtest" {
+  "path/to/pkg7",
+}
+```
+
+### オプション設定
+
+```moonbit
+options(
+  "is-main": true,
+  "bin-name": "name",
+  link: { "native": { "cc": "gcc" } },
+)
+```
+
+### JSON との比較
+
+| 項目 | JSON 形式 | moon.pkg 形式 |
+|------|-----------|---------------|
+| コメント | ❌ 非対応 | ✅ 対応 |
+| 末尾カンマ | ❌ 非対応 | ✅ 対応 |
+| 可読性 | 低（冗長） | 高（簡潔） |
+
 ## moon.mod.json（モジュール設定）
 
 ### 必須フィールド
