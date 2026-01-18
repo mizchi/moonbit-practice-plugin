@@ -199,36 +199,6 @@ fn binary_search(arr : ArrayView[Int], target : Int) -> Int? {
 }
 ```
 
-### Prefer Iteration Over Indexing
-
-```moonbit
-///|
-/// Okay but bounds-checked each access
-fn sum_indexed(arr : ArrayView[Int]) -> Int {
-  let mut sum = 0
-  for i = 0; i < arr.length(); i = i + 1 {
-    sum = sum + arr[i]
-  }
-  sum
-}
-
-///|
-/// Better: Iterator is optimized
-fn sum_iter(arr : ArrayView[Int]) -> Int {
-  let mut sum = 0
-  for v in arr {
-    sum = sum + v
-  }
-  sum
-}
-
-///|
-/// Best: Use fold
-fn sum_fold(arr : ArrayView[Int]) -> Int {
-  arr.fold(init=0, fn(a, b) { a + b })
-}
-```
-
 ## Converting Back to Owned Types
 
 When you need ownership:
