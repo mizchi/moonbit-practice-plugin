@@ -22,6 +22,9 @@ claude plugin install moonbit-practice@moonbit-plugins
 - **refactor.md**: Refactoring patterns
 - **configuration.md**: moon.mod.json / moon.pkg configuration
 - **agents.md**: Project layout and development workflow
+- **testing.md**: Doc tests, snapshot tests, benchmarks, and QuickCheck
+- **performance.md**: View types (StringView, ArrayView, BytesView) for zero-copy operations
+- **stdlib.md**: MoonBit standard library (moonbitlang/core) usage
 
 ## Directory Structure
 
@@ -37,7 +40,10 @@ moonbit-practice/
 │       │   ├── configuration.md
 │       │   ├── ffi.md
 │       │   ├── ide.md
-│       │   └── refactor.md
+│       │   ├── performance.md
+│       │   ├── refactor.md
+│       │   ├── stdlib.md
+│       │   └── testing.md
 │       └── assets/
 │           └── ci.yaml
 └── README.md
