@@ -10,9 +10,19 @@ title: "MoonBit Configuration Reference"
 my-project/
 ├── moon.mod.json    # モジュール設定（プロジェクト全体）
 └── src/
-    ├── moon.pkg.json  # パッケージ設定
+    ├── moon.pkg       # パッケージ設定（新形式）
     └── main.mbt
 ```
+
+## moon.pkg.json から moon.pkg への移行
+
+`moon.pkg.json` は独自構文の `moon.pkg` に移行中。以下のコマンドで変換できる：
+
+```bash
+NEW_MOON_PKG=1 moon fmt
+```
+
+これにより `moon.pkg.json` が `moon.pkg` に変換される。
 
 ## moon.mod.json（モジュール設定）
 
