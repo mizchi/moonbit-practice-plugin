@@ -170,6 +170,19 @@ extern "js" fn marked(input : String) -> String = "marked"
 - Must use `"format": "esm"` in `moon.pkg.json` link config
 - Target must be JavaScript backend (`--target js`)
 
+#### Limitations
+
+- **Only functions can be imported** - classes and objects cannot be directly imported via `#module`
+- To use classes or objects, import them through a wrapper function:
+
+```moonbit
+#module("some-lib")
+extern "js" fn get_some_class() -> Value = "SomeClass"
+
+// Then use it via Value operations
+let cls = get_some_class()
+```
+
 ## Exporting Functions
 
 Configure in `moon.pkg.json`:
