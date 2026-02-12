@@ -160,6 +160,35 @@ spec.mbt:
 $ moon ide outline parser.mbt
 ```
 
+### `moon ide hover`
+
+Show type signature and documentation for a symbol at a specific location. Unlike `peek-def` which shows the source definition, `hover` shows the inferred type and doc comments.
+
+```bash
+# Show type and docs for a symbol at a location
+$ moon ide hover my_func --loc src/lib.mbt:10:4
+fn my_func(x : Int) -> String
+---
+Documentation for my_func...
+
+# Show type info for a type reference
+$ moon ide hover Map --loc src/lib.mbt:5:18
+type Map[K, V]
+---
+Mutable linked hash map that maintains the order of insertion...
+```
+
+**When to use**: Use `hover` to inspect the inferred type or read documentation for a symbol in context. Use `peek-def` to jump to the source definition.
+
+### `moon ide rename`
+
+Rename a symbol across the entire project. Preferred over manual find-and-replace.
+
+```bash
+# Rename a symbol
+$ moon ide rename old_name new_name
+```
+
 ### `moon ide find-references`
 
 Find all references to a symbol.

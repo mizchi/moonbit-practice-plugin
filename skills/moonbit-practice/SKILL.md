@@ -207,6 +207,12 @@ moon ide find-references TranslationUnit
 
 # Jump to type definition (with location)
 moon ide peek-def Parser -loc src/parse.mbt:46:4
+
+# Show type signature and docs at location (unlike peek-def, shows inferred type + doc comments)
+moon ide hover my_func --loc src/lib.mbt:10:4
+
+# Rename symbol across the project
+moon ide rename old_name new_name
 ```
 
 ## Functional for loop
