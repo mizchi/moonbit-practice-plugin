@@ -39,7 +39,7 @@ moon ide outline src/parser.mbt
 
 - Use `moon doc '<Type>'` to explore APIs before implementing
 - Check reference/configuration.md before editing moon.pkg.json / moon.mod.json
-- Check reference/agents.md when updating CLAUDE.md
+- Check reference/language.md for detailed language feature examples (types, traits, pattern matching, etc.)
 
 ## Common Pitfalls
 
@@ -51,6 +51,7 @@ moon ide outline src/parser.mbt
 - **No `try` needed for error propagation** - automatic (unlike Swift)
 - **No `await` keyword** - just declare with `async fn`
 - **Prefer range for over C-style** - `for i in 0..<n {...}`
+- **`nobreak` not `else`** for functional for-loop exit values (`else` is deprecated)
 - **Legacy syntax**: `function_name!(...)` and `function_name(...)?` are deprecated
 
 ## Common Syntax Mistakes by AI
@@ -216,8 +217,8 @@ Prefer functional for loops whenever possible. More readable and easier to reaso
 // Functional for loop with state
 for i = 0, sum = 0; i <= 10; {
   continue i + 1, sum + i  // Update state
-} else {
-  sum  // Value at loop exit
+} nobreak {
+  sum  // Value at loop exit (nobreak, not else)
 }
 
 // Range for (recommended)
