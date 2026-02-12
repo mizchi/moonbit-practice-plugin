@@ -19,9 +19,10 @@ claude plugin install moonbit-practice@moonbit-practice
 
 - **ide.md**: Code navigation with `moon ide`
 - **ffi.md**: MoonBit FFI reference
+- **ffi-native.md**: Native C FFI patterns and ownership annotations
 - **refactor.md**: Refactoring patterns
 - **configuration.md**: moon.mod.json / moon.pkg configuration
-- **agents.md**: Project layout and development workflow
+- **language.md**: Language features (types, traits, pattern matching, access control)
 - **testing.md**: Doc tests, snapshot tests, benchmarks, and QuickCheck
 - **performance.md**: View types (StringView, ArrayView, BytesView) for zero-copy operations
 - **stdlib.md**: MoonBit standard library (moonbitlang/core) usage
@@ -36,9 +37,10 @@ moonbit-practice/
 │   └── moonbit-practice/
 │       ├── SKILL.md
 │       ├── reference/
-│       │   ├── agents.md
 │       │   ├── configuration.md
 │       │   ├── ffi.md
+│       │   ├── ffi-native.md
+│       │   ├── language.md
 │       │   ├── ide.md
 │       │   ├── performance.md
 │       │   ├── refactor.md
